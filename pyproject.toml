@@ -1,0 +1,147 @@
+[tool.poetry]
+name = "Flask-Extra"
+version = "0.1.0"
+homepage = "https://github.com/abilian/flask-extra"
+description = "More patterns and idioms for Flask applications."
+authors = ["Abilian SAS <sf@abilian.com>"]
+readme = "README.md"
+classifiers = [
+    'Development Status :: 2 - Pre-Alpha',
+    'Intended Audience :: Developers',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
+    'Programming Language :: Python :: 3.12',
+]
+packages = [
+    { include = "flask_extra", from = "src" },
+    { include = "tests", format = "sdist" },
+]
+
+
+[tool.poetry.dependencies]
+# We're uing pattern matching, so we need Python >=3.10
+python = ">=3.10,<4"
+
+flask = "^3.0.0"
+svcs = "^23.21.0"
+sentry-sdk = "^1.39.1"
+loguru = "^0.7.2"
+flask-sqlalchemy = "^3.1.1"
+advanced-alchemy = "^0.6.2"
+flask-super = "^0.2.5"
+shed = "^2023.6.1"
+
+
+[tool.poetry.group.dev.dependencies]
+## Standard cruft
+abilian-devtools = "*"
+
+# Cruft (project templates management)
+cruft = "*"
+toml = "*"
+
+## /standard cruft
+pyanalyze = "^0.11.0"
+devtools = "^0.12.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+# ---
+
+[tool.isort]
+profile = "black"
+
+# ---
+
+[tool.pytest.ini_options]
+filterwarnings = []
+addopts = "--tb=short"
+testpaths = [
+    "tests",
+    "src",
+]
+python_files = "test_*.py *_test.py tests.py"
+
+# ---
+
+[tool.bandit]
+skips = [
+    "B404", # blacklist
+    "B603", # subprocess_without_shell_equals_true
+]
+
+# ---
+
+[tool.pyanalyze]
+paths = ["src/"]
+import_paths = ["."]
+
+# Additional checks
+bare_ignore = true
+missing_f = true
+use_fstrings = true
+value_always_true = true
+
+# TODO: fix issues and activate
+#unused_ignore = true
+#enforce_no_unused = true
+#incompatible_override = true
+#missing_parameter_annotation = true
+#missing_return_annotation = true
+#suggested_parameter_type = true
+#suggested_return_type = true
+#use_fstrings = true
+#value_always_true = true
+
+# TODO: fix issues and remove
+#attribute_is_never_set = false
+#duplicate_dict_key = false
+#import_failed = false
+#impossible_pattern = false
+#incompatible_argument = false
+#incompatible_call = false
+#incompatible_return_value = false
+#internal_error = false
+#missing_return = false
+#possibly_undefined_name = false
+#undefined_attribute = false
+#unused_variable = false
+
+# ---
+
+[tool.deptry]
+ignore_obsolete = [
+]
+ignore_missing = [
+]
+ignore_transitive = [
+]
+exclude = [
+    '.tox', 'tests', 'sandbox', 'doc', 'scripts',
+]
+
+
+# ---
+
+[tool.pyright]
+exclude = [
+    '.tox',
+    '.nox',
+    'tests',
+    'sandbox',
+    'doc',
+    'scripts',
+    'tmp',
+]
+include = ["src"]
+
+# pyright has issues with modules imported from a root __init__.py
+reportPrivateImportUsage = false
+
+# Temp
+reportGeneralTypeIssues = false
+reportMissingImports = false
+reportOptionalSubscript = false

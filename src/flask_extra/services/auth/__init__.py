@@ -4,5 +4,6 @@ from flask_super.decorators import service
 
 @service
 class AuthService:
-    def get_user(self):
+    @staticmethod
+    def get_user():
         return g.user

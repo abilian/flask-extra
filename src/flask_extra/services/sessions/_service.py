@@ -1,10 +1,11 @@
 from __future__ import annotations
 
 from attr import define
-from flask_extra.services.auth import AuthService
 from flask_super.decorators import service
 from sqlalchemy.orm import scoped_session
 from svcs import Container
+
+from flask_extra.services.auth import AuthService
 
 from ._models import SessionRepository
 
@@ -43,6 +44,6 @@ class SessionService:
         repo = SessionRepository(session=self.db_session)
 
         user = self.auth_service.get_user()
-        session, _created = repo.get_or_create(user_id=user.id)
+        session, _created = repo.get_or_upsert(user_id=user.id)
         session.set(key, value)
         repo.add(session, auto_commit=True)

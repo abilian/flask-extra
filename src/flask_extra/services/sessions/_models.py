@@ -3,12 +3,13 @@ from __future__ import annotations
 import json
 
 from advanced_alchemy.base import BigIntBase
-from flask_extra.sqla.repository import Repository
 from sqlalchemy.orm import Mapped, mapped_column
+
+from flask_extra.sqla.repository import Repository
 
 
 class Session(BigIntBase):
-    __tablename__ = "ses_session"
+    __tablename__ = "ses_session"  # type: ignore
     """Model for storing user server-side sessions."""
 
     user_id: Mapped[int] = mapped_column(nullable=True, index=True)

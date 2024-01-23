@@ -1,7 +1,7 @@
 from __future__ import annotations
 
+import pytest
 from flask import g
-from flask_sqlalchemy import SQLAlchemy
 from svcs.flask import container
 
 from . import SessionService
@@ -11,7 +11,8 @@ class FakeUser:
     id = 1
 
 
-def test_session(db: SQLAlchemy) -> None:
+@pytest.mark.usefixtures("db_session")
+def test_session() -> None:
     g.user = FakeUser()
 
     session_service = container.get(SessionService)
